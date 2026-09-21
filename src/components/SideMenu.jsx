@@ -1,25 +1,37 @@
-export default function SideMenu({ closeMenu }) {
+export default function SideMenu({ closeMenu, activeSection }) {
   return (
     <>
       <div className="flex flex-col gap-5 z-999">
         <a
           href="#home"
           onClick={closeMenu}
-          className=" active:text-white text-tColor hover:text-white  px-2 py-1 rounded-md transition-colors"
+          className={`px-2 py-1 rounded-md transition-colors ${
+            activeSection === "home"
+              ? "bg-primary text-white"
+              : "text-tColor hover:text-white"
+          }`}
         >
           Home
         </a>
         <a
           href="#services"
           onClick={closeMenu}
-          className=" active:text-white text-tColor hover:text-white px-2 py-1 rounded-md transition-colors"
+          className={`px-2 py-1 rounded-md transition-colors ${
+            activeSection === "services"
+              ? "bg-primary text-white"
+              : "text-tColor hover:text-white"
+          }`}
         >
           Services
         </a>
         <a
           href="#contact"
           onClick={closeMenu}
-          className="  text-tColor hover:text-white px-2 py-1 rounded-md transition-colors"
+          className={`px-2 py-1 rounded-md transition-colors ${
+            activeSection === "contact"
+              ? "bg-primary text-white"
+              : "text-tColor hover:text-white"
+          }`}
         >
           Contact Us
         </a>

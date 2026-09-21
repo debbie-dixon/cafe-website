@@ -1,36 +1,68 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DynamicIcons from "./DynamicIcons";
 import SideMenu from "./SideMenu";
+
+const navItems = [
+  { label: "Home", href: "#home", section: "home" },
+  { label: "Menu", href: "#about", section: "about" },
+  { label: "Events", href: "#services", section: "services" },
+];
+const observedSections = ["home", "about", "services", "contact", "book"];
+
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const closeMenu = () => setIsOpen(false);
+
+  useEffect(() => {
+    const sections = observedSections
+      .map((section) => document.getElementById(section))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSection = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visibleSection) {
+          setActiveSection(visibleSection.target.id);
+        }
+      },
+      { rootMargin: "-25% 0px -60% 0px", threshold: [0, 0.25, 0.5, 1] },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  const linkClass = (section) =>
+    `px-4 py-1.5 rounded-full transition-colors duration-300 ${
+      activeSection === section
+        ? "bg-primary text-white"
+        : "hover:bg-primary hover:text-white"
+    }`;
+
   return (
     <>
-      <nav className="flex justify-between items-center gap-4 p-4 sticky top-0 left-0 w-full bg-white shadow-sm mx-auto z-50">
+      <nav className="flex justify-between items-center gap-4 py-4 px-16 sticky top-0 left-0 w-full bg-accent shadow-sm mx-auto z-50">
         <p className="font-serif italic font-bold text-2xl">Logo</p>
-        <div className="hidden md:flex gap-4 font-sans items-center">
-          <a href="/" className="px-2 py-1 rounded-md">
-            Home
-          </a>
-          <a href="#about" className="px-2 py-1 rounded-md">
-            About
-          </a>
-          <a href="#services" className="px-2 py-1 rounded-md">
-            Services
-          </a>
-          <a href="#contact" className="px-2 py-1 rounded-md">
-            Contact
-          </a>
-          <a
-            href="#book"
-            className="px-6 py-2.5 tracking-wide rounded-md bg-gray-400"
-          >
-            Book Us
-          </a>
+        <div className="hidden md:flex gap-4 font-sans items-center font-semibold">
+          {navItems.map(({ label, href, section }) => (
+            <a key={section} href={href} className={linkClass(section)}>
+              {label}
+            </a>
+          ))}
         </div>
+        <a
+          href="#book"
+          className="px-6 py-2.5 hidden md:flex tracking-wide rounded-full bg-primary text-white font-semibold hover:bg-secondary transition-colors duration-300"
+        >
+          Admin
+        </a>
         <button
           onClick={() => setIsOpen(true)}
-          className="md:hidden text-tColor p-2 focus:outline-none"
+          className="md:hidden p-2 focus:outline-none"
           aria-label="Open Menu"
         >
           <DynamicIcons iconName="menu" />
@@ -55,7 +87,7 @@ export default function NavBar() {
         >
           <DynamicIcons iconName="x" />
         </button>
-        <SideMenu closeMenu={closeMenu} />
+        <SideMenu closeMenu={closeMenu} activeSection={activeSection} />
       </div>
     </>
   );
