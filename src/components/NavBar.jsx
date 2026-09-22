@@ -45,9 +45,9 @@ export default function NavBar() {
 
   return (
     <>
-      <nav className="flex justify-between items-center gap-4 py-4 px-16 sticky top-0 left-0 w-full bg-accent shadow-sm mx-auto z-50">
-        <p className="font-serif italic font-bold text-2xl">Logo</p>
-        <div className="hidden md:flex gap-4 font-sans items-center font-semibold">
+      <nav className="flex justify-between items-center gap-4 py-4 px-10 sticky top-0 left-0 w-full bg-opacity-20 backdrop-blur-sm shadow-sm mx-auto z-50">
+        <p className="font-serif italic font-bold text-2xl text-white">Logo</p>
+        <div className="hidden md:flex gap-4 font-sans text-white items-center font-semibold">
           {navItems.map(({ label, href, section }) => (
             <a key={section} href={href} className={linkClass(section)}>
               {label}

@@ -1,10 +1,9 @@
 import { DynamicIcon } from "lucide-react/dynamic";
 
-export default function DynamicIcons({ iconName, link, text }) {
+export default function DynamicIcons({ iconName, link, text, size = "24" }) {
   return (
     <a href={link} className="flex gap-1 items-center">
-      <DynamicIcon name={iconName} size={18} />
-      {text}
+      {text} <DynamicIcon name={iconName} size={size} />
     </a>
   );
 }

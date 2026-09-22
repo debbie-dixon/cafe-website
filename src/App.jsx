@@ -24,8 +24,6 @@ function App() {
   }, []);
   return (
     <>
-      <NavBar />
-
       <main>
         <Hero />
         <Offers />

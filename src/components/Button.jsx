@@ -1,3 +1,4 @@
+import DynamicIcons from "./DynamicIcons";
 export default function Button({
   border,
   bgColor,
@@ -10,14 +11,15 @@ export default function Button({
   font,
   textColor,
   link,
+  icon,
 }) {
   return (
     <>
       <a href={link}>
         <button
-          className={`px-6 py-2 ${textColor}  transition-all ${font} duration-300 mt-4 shadow-sm ${border} ${bgColor} ${borderColor} ${hover} ${hoverTp} ${size} ${rounded}`}
+          className={`px-6 py-3 ${textColor}   transition-all ${font} duration-300 mt-4 shadow-sm ${border} ${bgColor} ${borderColor} ${hover} ${hoverTp} ${size} ${rounded}`}
         >
-          {text}
+          <DynamicIcons iconName={icon} text={text} />
         </button>
       </a>
     </>
