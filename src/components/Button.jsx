@@ -15,13 +15,13 @@ export default function Button({
 }) {
   return (
     <>
-      <a href={link}>
+      <section href={link}>
         <button
           className={`px-6 py-3 ${textColor}   transition-all ${font} duration-300 mt-4 shadow-sm ${border} ${bgColor} ${borderColor} ${hover} ${hoverTp} ${size} ${rounded}`}
         >
           <DynamicIcons iconName={icon} text={text} />
         </button>
-      </a>
+      </section>
     </>
   );
 }
